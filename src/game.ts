@@ -14,7 +14,7 @@ export class Game extends PIXI.Application {
     private coins: AnimatedCoins;
 
     constructor() {
-        super(960, 554, {backgroundColor: 0x333333, legacy: true});
+        super(450, 450, {backgroundColor: 0xffffff, legacy: true});
         document.body.appendChild(this.view);
 
         // set stage
@@ -40,7 +40,7 @@ export class Game extends PIXI.Application {
 
     private setup(loader: PIXI.loaders.Loader, resources: any): void {
         const bg: PIXI.Sprite = PIXI.Sprite.fromImage("assets/images/bg.jpg");
-        this.stage.addChild(bg);
+        // this.stage.addChild(bg);
 
         // add tiles
         this.tiles = [];
@@ -51,7 +51,7 @@ export class Game extends PIXI.Application {
             col = i % 3;
             row = Math.floor(i / 3);
             tile = new Tile(this.renderer);
-            tile.position.set(500 + 150 * col, 18 + 150 * row);
+            tile.position.set(3 + 150 * col, 3 + 150 * row);
             tile.on("revealed", this.onTileRevealed, this);
             this.tiles.push(tile);
             this.stage.addChild(tile);
@@ -61,7 +61,7 @@ export class Game extends PIXI.Application {
         this.btnPlay = new SimpleButton(442, 50, 0xc3dc41);
         this.btnPlay.position.set(500, 480);
         this.btnPlay.on("pointerdown", this.onPointerDown, this);
-        this.stage.addChild(this.btnPlay);
+        // this.stage.addChild(this.btnPlay);
 
         // add animated coins
         this.coins = new AnimatedCoins(480);
@@ -115,13 +115,13 @@ export class Game extends PIXI.Application {
 
     private resize(): void {
         // get the min ratio
-        const ratio = Math.min(window.innerWidth / 960, window.innerHeight / 554);
+        const ratio = Math.min(window.innerWidth / 450, window.innerHeight / 450);
 
         // scale stage
         this.stage.scale.set(ratio, ratio);
 
         // resize render
-        this.renderer.resize(960 * ratio, 554 * ratio);
+        this.renderer.resize(450 * ratio, 450 * ratio);
     }
 
     private onPointerDown(event: PIXI.interaction.InteractionEvent): void {
