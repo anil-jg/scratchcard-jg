@@ -31,7 +31,7 @@ export class Tile extends PIXI.Container {
 
         // get the brush
         if (Tile.brush === undefined) {
-            Tile.brush = PIXI.Sprite.fromImage("assets/images/brush.png");
+            Tile.brush = PIXI.Sprite.fromImage("assets/images/brush2.png");
             Tile.brush.width = Tile.brushRadius * 2;
             Tile.brush.height = Tile.brushRadius * 2;
             Tile.brush.anchor.set(0.5, 0.5);
