@@ -1,9 +1,7 @@
 import { TweenMax } from "gsap";
 import { PRIZES } from "./prizes";
 
-// TweenMax Typescrypt fix: https://greensock.com/forums/topic/16395-gsap-business-green-in-angular-2/
 declare module "gsap" {
-    // tslint:disable-next-line:interface-name
     export interface TweenConfig {
         [p: string]: any;
     }
@@ -29,7 +27,6 @@ export class Tile extends PIXI.Container {
 
         this.renderer = renderer;
 
-        // get the brush
         if (Tile.brush === undefined) {
             Tile.brush = PIXI.Sprite.fromImage("assets/images/brush2.png");
             Tile.brush.width = Tile.brushRadius * 2;
@@ -37,7 +34,6 @@ export class Tile extends PIXI.Container {
             Tile.brush.anchor.set(0.5, 0.5);
         }
 
-        // add cover (unscratched)
         const cover = PIXI.Sprite.fromFrame("tile_bg_unscratched.png");
         this.addChild(cover);
 
@@ -48,7 +44,6 @@ export class Tile extends PIXI.Container {
             Tile.rect.endFill();
         }
 
-        // add prize and value
         const main: PIXI.Container = new PIXI.Container();
         this.addChild(main);
 
@@ -74,13 +69,11 @@ export class Tile extends PIXI.Container {
         this.label.position.set(bg.width * 0.5, bg.height - 5);
         main.addChild(this.label);
 
-        // add render texture to emulate the scratch
         this.renderTexture = PIXI.RenderTexture.create(cover.width, cover.height);
         const renderTextureSprite: PIXI.Sprite = new PIXI.Sprite(this.renderTexture);
         this.addChild(renderTextureSprite);
         main.mask = renderTextureSprite;
 
-        // set as interactive and add listener
         this.points = [];
         this.dragging = false;
         this.interactive = true;
@@ -93,22 +86,18 @@ export class Tile extends PIXI.Container {
     }
 
     public setPrize(prize: number): void {
-        // reset values
         this.points = [];
         this.dragging = false;
         this.interactive = true;
         this.prize.alpha = 1;
         this.prize.scale.set(0.7, 0.7);
 
-        // stop previous animations
         TweenMax.killTweensOf(this.prize.scale);
 
-        // set the prize (id, texture and text)
         this.id = prize;
         this.prize.texture = PIXI.Texture.fromFrame(PRIZES[this.id].img);
         this.label.text = (this.id > 0) ? "$" + PRIZES[this.id].value : "";
 
-        // clean the render texture
         this.renderer.render(new PIXI.Graphics(), this.renderTexture, true, null, false);
     }
 
@@ -117,7 +106,6 @@ export class Tile extends PIXI.Container {
         this.interactive = false;
         this.renderer.render(Tile.rect, this.renderTexture, false, null, false);
 
-        // dispatch revealed event
         this.emit("revealed", this);
     }
 
@@ -135,13 +123,11 @@ export class Tile extends PIXI.Container {
 
     private onPointerMove(event: PIXI.interaction.InteractionEvent): void {
         if (this.dragging) {
-            // add the brush
             const point: PIXI.Point = event.data.getLocalPosition(this);
             Tile.brush.rotation = Math.random() * Math.PI;
             Tile.brush.position.copy(point);
             this.renderer.render(Tile.brush, this.renderTexture, false, null, false);
 
-            // point limits
             if (point.x < Tile.brushRadius) {
                 point.x = Tile.brushRadius;
             }
@@ -155,7 +141,7 @@ export class Tile extends PIXI.Container {
                 point.y = this.height - Tile.brushRadius;
             }
 
-            if (this.points.length === 0) { // if is the first
+            if (this.points.length === 0) { 
                 this.points.push(point);
             } else {
                 const len: number = this.points.length;

@@ -1,14 +1,12 @@
 {
-    "name": "scratchcard-typescrypt",
+    "name": "scratchcard-jg",
     "version": "1.0.1",
-    "description": "Simple Scratchcard Game",
+    "description": " Scratchcard Game",
     "main": "dist/index.js",
     "scripts": {
         "dev": "webpack-dev-server -d --inline --hot --progress --no-info --port 9000",
         "build": "webpack -p"
     },
-    "author": "Maicon Feldhaus (maicon.feldhaus@gmail.com)",
-    "license": "MIT",
     "devDependencies": {
         "copy-webpack-plugin": "^4.1.1",
         "gsap": "^1.20.3",
